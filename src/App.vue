@@ -1,26 +1,32 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <el-config-provider :size="size" :z-index="zIndex">
+<!--    make the following elements center-->
+    <el-row :gutter="20" justify="center">
+<!--      make the following elements center-->
+      <el-col :span="12">
+
+      <ElementTest />
+<!--      <BSTest/>-->
+      </el-col>
+    </el-row>
+  </el-config-provider>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import ElementTest from "./components/Eleme.vue";
+// import BSTest from "@/components/BSTest";
+
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld
-  }
+    ElementTest,
+    // BSTest,
+  },
+  setup() {
+    return {
+      zIndex: 3000,
+      size: 'small',
+    }
+  },
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
