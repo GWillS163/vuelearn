@@ -1,5 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import router from './router'
+import './assets/less/index.less'
 const app = createApp(App)
 
 import BootstrapVue3 from 'bootstrap-vue-3'
@@ -12,4 +14,13 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 app.use(ElementPlus)
 
+
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  app.component(key, component)
+}
+
+app.use(router)
 app.mount('#app')
+//test
+

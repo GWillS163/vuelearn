@@ -1,25 +1,15 @@
 <template>
-  <el-config-provider :size="size" :z-index="zIndex">
-<!--    make the following elements center-->
-    <el-row :gutter="20" justify="center">
-<!--      make the following elements center-->
-      <el-col :span="12">
-
-      <ElementTest />
-<!--      <BSTest/>-->
-      </el-col>
-    </el-row>
-  </el-config-provider>
+  <router-view/>
 </template>
 
 <script>
-import ElementTest from "./components/Eleme.vue";
+// import ElementTest from "./components/Eleme.vue";
 // import BSTest from "@/components/BSTest";
 
 
 export default {
   components: {
-    ElementTest,
+    // ElementTest,
     // BSTest,
   },
   setup() {
@@ -30,3 +20,8 @@ export default {
   },
 }
 </script>
+<style>
+#app {
+  height: 100%;
+}
+</style>
