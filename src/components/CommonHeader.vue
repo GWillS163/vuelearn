@@ -1,8 +1,9 @@
 <template>
   <el-header>
     <div class="l-content">
-<!--      Content-->
-      <el-button value="Menu" icon="menu"></el-button>
+      <el-button value="Menu" icon="menu" size="small"
+      @click="handleCollapse"
+      ></el-button>
       <h3>首页</h3>
     </div>
     <div class="r-content">
@@ -29,9 +30,10 @@
 <script>
 import {  defineComponent } from "vue-demi";
 // import { useRouter } from "vue-router";
-// import { useStore } from "vuex";
+import { useStore } from "vuex";
 export default defineComponent({
   setup(){
+    const store = useStore();
     // const imgSrc = require('../assets/images/user.png')
     let getImageUrl = () => {
       // console.log(import.meta.url);
@@ -39,8 +41,14 @@ export default defineComponent({
       return new URL(`../assets/images/user.png`, import.meta.url).href;
       // return new URL(`../assets/images/${user}.png`, import.meta.url).href;
     }
+
+    let handleCollapse = () => {
+      store.commit("updateIsCollapse", "233");
+    }
+
     return {
-      getImageUrl
+      getImageUrl,
+      handleCollapse
     }
   },
   name: 'CommonHeader'
