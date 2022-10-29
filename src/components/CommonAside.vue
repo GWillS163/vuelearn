@@ -1,12 +1,12 @@
 <template>
-    <el-aside width="200px">
+    <el-aside :width="$store.state.isCollapse ? '180px' : '64px'">
         <el-menu
           default-active="2"
           class="el-menu-vertical-demo"
           background-color="#545c64"
           text-color="#ffffff"
-          @open="handleOpen"
-          @close="handleClose"
+          :collapse="!$store.state.isCollapse"
+          :collapse-transition="false"
         >
           <el-menu-item
               :index="item.path"
@@ -42,6 +42,7 @@
 </template>
 
 <script>
+
 export default {
   name: "CommonAside",
   setup() {
@@ -83,8 +84,8 @@ export default {
       const hasChildren = () => {
         return list.filter((item) => item.children);
       };
+
   return {
-    list,
     noChildren,
     hasChildren
   }
