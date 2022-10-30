@@ -11,6 +11,7 @@
 </template>
 
 <script>
+
 import { defineComponent } from "vue";
 import CommonHeader from "../components/CommonHeader.vue"
 import CommonAside from "../components/CommonAside.vue"

@@ -14,6 +14,7 @@
               :index="item.path"
               v-for="item in noChildren()"
               :key="item.path"
+              @click="clickMenu(item)"
           >
             <component class="icons" :is="item.icon"></component>
             <span>{{ item.label }}</span>
@@ -33,6 +34,7 @@
                   :index="subItem.path"
                   v-for="(subItem, subIndex) in item.children"
                   :key="subIndex"
+                  @click="clickMenu(subItem)"
               >
                 <component class="icons" :is="subItem.icon"></component>
                 <span>{{ subItem.label }}</span>
@@ -44,17 +46,17 @@
 </template>
 
 <script>
-
+import { useRouter } from 'vue-router'
 export default {
   name: "CommonAside",
   setup() {
       const list = [
         {
-          path: '/user',
-          name: 'user',
-          label: '用户管理',
-          icon: 'user',
-          url: 'UserManage/UserManage'
+          label: "用户管理",
+          icon: "user",
+          path: "/user",
+          name: "user",
+          url: "UserManage/UserManage"
         },
         {
           label: '其他',
@@ -79,6 +81,8 @@ export default {
 
       ];
 
+      const router = useRouter();
+
       const noChildren = () => {
         return list.filter((item) => !item.children);
       };
@@ -87,9 +91,17 @@ export default {
         return list.filter((item) => item.children);
       };
 
+      // Menu jump
+      const clickMenu = (item) => {
+        router.push({
+          name: item.name,
+        });
+      }
+
   return {
     noChildren,
-    hasChildren
+    hasChildren,
+    clickMenu,
   }
   }
 }
@@ -109,8 +121,7 @@ export default {
   line-height: 48px;
   color: #fff;
   text-align: center;
+  }
 }
-}
-
 
 </style>
