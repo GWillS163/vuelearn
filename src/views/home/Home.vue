@@ -1,7 +1,6 @@
 <template>
-  <el-row class="home" gutter="20">
+  <el-row class="home" :gutter=20>
     <el-col :span="8" style="margin-top: 20px">
-      233
       <el-card shadow="hover">
         <div class="user">
           <img src="../../assets/images/user.png" alt="" />
@@ -23,71 +22,49 @@
 
           </el-table-column>
         </el-table>
-
-
       </el-card>
     </el-col>
-    <el-col :span="16">333</el-col>
+    <el-col :span="16">
+
+    </el-col>
   </el-row>
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
+import axios from "axios";
 
 export default defineComponent({
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Home",
   setup() {
 
-    const tableData = [
-          {
-            name: 'oppo',
-            todayBuy: 500,
-            monthBuy: 3500,
-            totalBuy: 22000
-          },
-          {
-            name: 'vivo',
-            todayBuy: 300,
-            monthBuy: 2200,
-            totalBuy: 24000
-          },
-          {
-            name: '苹果',
-            todayBuy: 800,
-            monthBuy: 4500,
-            totalBuy: 65000
-          },
-          {
-            name: '小米',
-            todayBuy: 1200,
-            monthBuy: 6500,
-            totalBuy: 45000
-          },
-          {
-            name: '三星',
-            todayBuy: 300,
-            monthBuy: 2000,
-            totalBuy: 34000
-          },
-          {
-            name: '魅族',
-            todayBuy: 350,
-            monthBuy: 3000,
-            totalBuy: 22000
-          }
-        ];
+    let tableData = ref([]);
     const tableLabel = {
       name: "课程",
       todayBuy: "今日购买",
       monthBuy: "本月购买",
       totalBuy: "总购买",
     }
-    let getImgSrc = () => {
-      return `../../assets/images/user.png`
+
+    const getTableList = async () => {
+      await axios.get("/home/getData").then((res) => {
+        console.log(res);
+        tableData.value = res.data.data.tableData
+      })
     }
+
+    const getTableListOnline = async () => {
+      await axios.get("https://www.fastmock.site/mock/44c95e0c04975201194d23c9204d83dd/getHomeData/api/getHomePage").then((res) => {
+        console.log(res);
+        tableData.value = res.data.tableData
+      })
+    }
+    onMounted(() => {
+      getTableList();
+      // getTableListOnline();
+    })
     return {
-      getImgSrc,
       tableData,
       tableLabel
     }

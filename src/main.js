@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import './assets/less/index.less'
+import './api/mock.js'
 import store from './store/index.js'
 const app = createApp(App)
 
