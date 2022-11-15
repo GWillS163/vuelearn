@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref } from "vue";
+import {defineComponent, getCurrentInstance, onMounted, ref} from "vue";
 import axios from "axios";
 
 export default defineComponent({
@@ -48,10 +48,13 @@ export default defineComponent({
     }
 
     const getTableList = async () => {
-      await axios.get("/home/getData").then((res) => {
-        console.log(res);
-        tableData.value = res.data.data.tableData
-      })
+      // await axios.get("/home/getData").then((res) => {
+      //   console.log(res);
+      //   tableData.value = res.data.data.tableData
+      // })
+      const {proxy} = getCurrentInstance();
+      let res = await proxy.$api.getTableData();
+      console.log(res);
     }
 
     const getTableListOnline = async () => {
