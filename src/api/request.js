@@ -2,10 +2,11 @@ import axios from 'axios'
 import config from '../config'
 import { ElMessage } from 'element-plus'
 const NETWORK_ERROR = 'Network Error(网络错误)'
+
 // 创建axios实例
 const service = axios.create({
     baseURL: config.baseApi, // api的base_url
-    timeout: 3000 // 请求超时时间
+    timeout: 200 // 请求超时时间
 })
 
 // request拦截器
@@ -19,7 +20,7 @@ service.interceptors.request.use((req) => {
 service.interceptors.response.use((res) => {
     // Do something before response is sent
   const { code, data, msg } = res.data
-    if (code == 200) {
+    if (code === 200) {
         return data
     } else {
         // Prompt that
