@@ -18,13 +18,14 @@ app.use(ElementPlus)
 
 
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-import api from "./api/api";
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
 
+import api from './api/api.js'
+app.config.globalProperties.$api = api
 app.use(router).use(store)
 app.mount('#app')
 //test
 
-app.config.globalProperties.$api = api
+

@@ -2,60 +2,54 @@ import axios from 'axios'
 import config from '../config'
 import { ElMessage } from 'element-plus'
 const NETWORK_ERROR = 'Network Error(网络错误)'
-
 // 创建axios实例
 const service = axios.create({
     baseURL: config.baseApi, // api的base_url
-    timeout: 200 // 请求超时时间
+
 })
 
-// request拦截器
+// before request hook
 service.interceptors.request.use((req) => {
-    // Do something before request is sent
-    // When jwt authenticate
+    // jwt-token 认证的时候使用
     return req
 })
 
-// response拦截器
+// after response hook
 service.interceptors.response.use((res) => {
-    // Do something before response is sent
-  const { code, data, msg } = res.data
+    console.log(res.data)
+    const { code, data, msg } = res.data
     if (code === 200) {
         return data
     } else {
-        // Prompt that
-        ElMessage.error(msg || NETWORK_ERROR )
+        // 网络请求错误
+        ElMessage.error(msg || NETWORK_ERROR)
         return Promise.reject(msg || NETWORK_ERROR)
     }
 })
 
-// 封装get请求
+// request method
 function request(options) {
+    // { method: 'get', data: { } }
+
     options.method = options.method || 'get'
     if (options.method.toLowerCase() === 'get') {
         options.params = options.data
     }
 
-    // judge mock switch for following if statement
-    let isMock = config.mock
-    if (typeof options.mock !== 'undefined') { // If mock is not undefined, use mock
+    // mock
+    let isMock = config.mock // 是否开启mock
+    if (typeof options.mock !== 'undefined') { // 针对某个接口是否使用mock
         isMock = options.mock
     }
 
-    // set baseURL of service
+    // 线上环境不使用mock
     if (config.env === 'prod') {
-        // 线上不准使用mock
         service.defaults.baseURL = config.baseApi
     } else {
-        // 开发环境
         service.defaults.baseURL = isMock ? config.mockApi : config.baseApi
     }
 
     return service(options)
-
 }
 
 export default request
-
-// request = service(options), service(options) is a promise
-//

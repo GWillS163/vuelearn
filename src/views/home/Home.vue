@@ -38,6 +38,7 @@ export default defineComponent({
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Home",
   setup() {
+    const { proxy } = getCurrentInstance();
 
     let tableData = ref([]);
     const tableLabel = {
@@ -52,9 +53,7 @@ export default defineComponent({
       //   console.log(res);
       //   tableData.value = res.data.data.tableData
       // })
-      const {proxy} = getCurrentInstance();
-      let res = await proxy.$api.getTableData();
-      console.log(res);
+      tableData.value = await proxy.$api.getHomeData()
     }
 
     const getTableListOnline = async () => {
