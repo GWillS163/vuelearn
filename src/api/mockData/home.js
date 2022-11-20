@@ -2,8 +2,7 @@ export default {
     getHomeData: () => {
         return {
             code: 200,
-            data: {
-                    tableData: [
+            data: [
               {
                 name: 'oppo',
                 todayBuy: 500,
@@ -41,7 +40,7 @@ export default {
                 totalBuy: 22000
               }
             ]
-            }
+
         }
     }
 }
