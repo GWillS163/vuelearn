@@ -31,13 +31,14 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref } from "vue";
+import {defineComponent, getCurrentInstance, onMounted, ref} from "vue";
 import axios from "axios";
 
 export default defineComponent({
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Home",
   setup() {
+    const { proxy } = getCurrentInstance();
 
     let tableData = ref([]);
     const tableLabel = {
@@ -48,10 +49,11 @@ export default defineComponent({
     }
 
     const getTableList = async () => {
-      await axios.get("/home/getData").then((res) => {
-        console.log(res);
-        tableData.value = res.data.data.tableData
-      })
+      // await axios.get("/home/getData").then((res) => {
+      //   console.log(res);
+      //   tableData.value = res.data.data.tableData
+      // })
+      tableData.value = await proxy.$api.getHomeData()
     }
 
     const getTableListOnline = async () => {
