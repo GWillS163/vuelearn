@@ -1,6 +1,6 @@
 <template>
   <div class="common-layout">
-    <el-container>
+    <el-container class="lay-container">
       <common-aside />
       <el-container>
         <CommonHeader/>
@@ -50,6 +50,10 @@ export default defineComponent({
        background-color: #545c64;
      }
   }
+  .lay-container{
+    flex-wrap: nowrap;
+  }
 }
+
 
 </style>

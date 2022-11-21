@@ -16,7 +16,7 @@ service.interceptors.request.use((req) => {
 
 // after response hook
 service.interceptors.response.use((res) => {
-    console.log(res.data)
+    console.log("by Interceptor: ", res.data)
     const { code, data, msg } = res.data
     if (code === 200) {
         return data

@@ -1,5 +1,5 @@
 <template>
-  <el-row class="home" :gutter=20>
+  <el-row class="home" :gutter="20">
     <el-col :span="8" style="margin-top: 20px">
       <el-card shadow="hover">
         <div class="user">
@@ -25,22 +25,47 @@
       </el-card>
     </el-col>
     <el-col :span="16">
+      <div class="num">
+        <el-card
+          :body-style="{ display: 'flex', padding: 0 }"
+          v-for="item in countData"
+          :key="item.name"
+        >
+          <component
+            class="icons"
+            :is="item.icon"
+            :style="{ background: item.color }"
+          >
+
+            {{item.icon}}
+          </component>
+          <div class="details">
+            <p class="num">$ {{ item.value}}</p>
+            <p class="txt"> {{item.name}}</p>
+          </div>
+        </el-card>
+      </div>
 
     </el-col>
   </el-row>
 </template>
 
 <script>
-import {defineComponent, getCurrentInstance, onMounted, ref} from "vue";
-import axios from "axios";
+import {
+  defineComponent,
+  getCurrentInstance,
+  onMounted,
+  ref,
+} from "vue";
+
 
 export default defineComponent({
   // eslint-disable-next-line vue/multi-word-component-names
-  name: "Home",
   setup() {
     const { proxy } = getCurrentInstance();
-
     let tableData = ref([]);
+    let countData = ref([]);
+
     const tableLabel = {
       name: "课程",
       todayBuy: "今日购买",
@@ -48,7 +73,7 @@ export default defineComponent({
       totalBuy: "总购买",
     }
 
-    const getTableList = async () => {
+    const getTableData = async () => {
       // await axios.get("/home/getData").then((res) => {
       //   console.log(res);
       //   tableData.value = res.data.data.tableData
@@ -56,19 +81,19 @@ export default defineComponent({
       tableData.value = await proxy.$api.getHomeData()
     }
 
-    const getTableListOnline = async () => {
-      await axios.get("https://www.fastmock.site/mock/44c95e0c04975201194d23c9204d83dd/getHomeData/api/getHomePage").then((res) => {
-        console.log(res);
-        tableData.value = res.data.tableData
-      })
+    const getCountData = async () => {
+      countData.value = await proxy.$api.getCountData()
     }
+
     onMounted(() => {
-      getTableList();
+      getTableData();
       // getTableListOnline();
+      getCountData();
     })
     return {
       tableData,
-      tableLabel
+      tableLabel,
+      countData,
     }
 
   }
@@ -102,5 +127,36 @@ export default defineComponent({
     }
   }
 }
+.num{
+  display: flex;
+  flex-wrap:wrap;
+  justify-content: space-between;
+  .el-card{
+    width: 32%;
+    margin-bottom: 20px;
+  }
+  .icons{
+    width: 80px;
+    height: 80px;
+    font-size: 30px;
+    text-align: center;
+    line-height: 80px;
+    color: #fff;
+  }
+  .details{
+    margin-left: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .num{
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
 
+    .txt{
+      font-size: 14px;
+      text-align: #999;
+    }
+  }
+}
 </style>
