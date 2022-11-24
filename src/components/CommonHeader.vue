@@ -4,7 +4,13 @@
       <el-button value="Menu" icon="menu" size="small"
       @click="handleCollapse"
       ></el-button>
-      <h3>首页</h3>
+      <el-breadcrumb separator="/" class="bread">
+<!--        首页一定存在，所以写死-->
+        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+
+        <el-breadcrumb-item :to="current.path" v-if="current">{{ current.label }}</el-breadcrumb-item>
+
+    </el-breadcrumb>
     </div>
     <div class="r-content">
       <el-dropdown>
@@ -28,7 +34,7 @@
 
 
 <script>
-import {  defineComponent } from "vue-demi";
+import {  computed, defineComponent } from "vue-demi";
 // import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 export default defineComponent({
@@ -45,10 +51,15 @@ export default defineComponent({
     let handleCollapse = () => {
       store.commit("updateIsCollapse", "233");
     }
+    // 面包屑 通信
+    const current = computed(() => {
+      return store.state.currentMenu;
+    });
 
     return {
       getImageUrl,
-      handleCollapse
+      handleCollapse,
+      current
     }
   },
   name: 'CommonHeader'
@@ -97,5 +108,9 @@ li {
 }
 a {
   color: #42b983;
+}
+.bread /deep/ span {
+  color: #ffffff !important;
+  cursor: pointer;
 }
 </style>

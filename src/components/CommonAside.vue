@@ -47,9 +47,11 @@
 
 <script>
 import { useRouter } from 'vue-router'
+import {useStore} from "vuex";
 export default {
   name: "CommonAside",
   setup() {
+      const store = useStore();
       const list = [
         {
           label: "用户管理",
@@ -96,6 +98,8 @@ export default {
         router.push({
           name: item.name,
         });
+      // vuex 来管理
+      store.commit("selectMenu", item);
       }
 
   return {
