@@ -27,6 +27,10 @@ export default createStore({
                 let result = state.tagsList.findIndex(item => item.name === payload.name)
                 result === -1 ? state.tagsList.push(payload) : ''
             }
+        },
+        closeTag(state, payload) {
+            let result = state.tagsList.findIndex(item => item.name === payload.name)
+            state.tagsList.splice(result, 1)
         }
     }
 })

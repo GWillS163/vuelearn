@@ -25,6 +25,15 @@ export default {
             method: 'get',
             mock: true
         })
+    },
+    // 获得用户列表
+    getUserList(params) {
+        return request({
+            url: '/user/getUser', // 本地mock数据
+            method: 'get',
+            data: params,
+            mock: true
+        })
     }
 
 
