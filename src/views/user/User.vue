@@ -22,6 +22,14 @@
     </el-table-column>
   </el-table>
   </div>
+  <el-pagination
+      small
+      background
+      layout="prev, pager, next"
+      :total="config.total"
+      class="mt-4"
+      @current-change="changePage($event)"
+  />
 </template>
 
 
@@ -59,21 +67,33 @@ export default defineComponent({
         width: 320,
       },
     ]);
-    onMounted(() => {
-      console.log('User')
-      getuserData()
+    const config = reactive({
+      total: 0,
+      page: 1,
     })
-    const getuserData = async() => {
-      let res = await proxy.$api.getUserData();
-      console.log(res)
+    onMounted(() => {
+      getuserData(config)
+    })
+    const getuserData = async(config) => {
+      let res = await proxy.$api.getUserData(config);
+      // console.log(res);
+      config.total = res.count;
+
       list.value = res.list.map((item) => {
         item.sexLabel = item.sex === 1 ? "男" : "女";
         return item;
       })
     }
+    const changePage = (page) => {
+      console.log(page);
+      config.page = page;
+      getuserData(config);
+    }
     return {
       list,
       tableLabel,
+      config,
+      changePage
     }
   }
 })

@@ -109,7 +109,7 @@ li {
 a {
   color: #42b983;
 }
-.bread /deep/ span {
+deep(.bread span) {
   color: #ffffff !important;
   cursor: pointer;
 }
