@@ -8,30 +8,7 @@ echarts表格数据
 
 user展示
 表头配置
-const tableLabel = reactive([
-      {
-        prop: "name",
-        label: "姓名",
-      },
-      {
-        prop: "age",
-        label: "年龄",
-      },
-      {
-        prop: "sexLabel",
-        label: "性别",
-      },
-      {
-        prop: "birth",
-        label: "出生日期",
-        width: 200,
-      },
-      {
-        prop: "addr",
-        label: "地址",
-        width: 320,
-      },
-    ]);
+
 userMock模拟函数
 
 权限管理

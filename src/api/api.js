@@ -1,4 +1,4 @@
-// 所有 api
+// 所有 api 经过此管理
 import request from './request'
 
 
@@ -27,12 +27,12 @@ export default {
         })
     },
     // 获得用户列表
-    getUserList(params) {
+    getUserData(params) {
         return request({
             url: '/user/getUser', // 本地mock数据
             method: 'get',
             data: params,
-            mock: true
+            mock: false  // 如果是fastMock环境，需要改为true
         })
     }
 
