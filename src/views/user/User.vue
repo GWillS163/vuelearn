@@ -1,6 +1,6 @@
 <template>
   <div class="user-header">
-    <el-button type="primary"> + 新增 </el-button>
+    <el-button type="primary" @click="dialogVisible=true"> + 新增 </el-button>
     <el-form :inline="true" :model="formInline" >
       <el-form-item label="请输入">
         <el-input v-model="formInline.keyword" placeholder="用户名" />
@@ -39,11 +39,62 @@
       @current-change="changePage($event)"
   />
   </div>
+  <el-dialog
+    v-model="dialogVisible"
+    title="信息新增"
+    width="45%"
+    :before-close="handleClose"
+  >
+    <el-form :inline="true" :model="formUser" >
+      <el-row>
+        <el-col :span="12">
+          <el-form-item label="姓名">
+            <el-input v-model="formUser.name" placeholder="请输入姓名"/>
+          </el-form-item>
+          <el-form-item label="性别">
+            <el-select v-model="formUser.sex" placeholder="请选择">
+              <el-option label="男" value="0"/>
+              <el-option label="女" value="1"/>
+            </el-select>
+          </el-form-item>
+        </el-col>
+
+        <el-col :span="12">
+          <el-form-item label="年龄">
+            <el-input v-model="formUser.age" placeholder="请输入年龄"/>
+          </el-form-item>
+
+          <el-form-item  label="出生日期" prop="date">
+            <el-date-picker
+                  v-model="formUser.birth"
+                  type="birth"
+                  label="出生日期"
+                  placeholder="选择日期"
+                  style="width: 100%"
+                />
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+      <el-form-item label="地址">
+        <el-input v-model="formUser.addr" placeholder="请输入地址"  type="textarea" />
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="onSumbit">
+          确定
+        </el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
 
 <script>
 import {defineComponent, getCurrentInstance, onMounted, reactive, ref} from "vue";
+import {ElMessageBox} from "element-plus";
 
 
 export default defineComponent({
@@ -110,6 +161,28 @@ export default defineComponent({
       getuserData(config)
     }
 
+    const dialogVisible = ref(false)
+
+    const handleClose = (done) => {
+    ElMessageBox.confirm('Are you sure to close this dialog?')
+      .then(() => {
+        done()
+      })
+      .catch(() => {
+        // catch error
+      })
+}
+    const formUser = reactive({
+      name:"",
+      sex: "",
+      age: "",
+      birth: "",
+      addr: "",
+    })
+    const onSubmit = () => {
+      this.dialogVisible = false;
+
+    }
     return {
       list,
       tableLabel,
@@ -117,6 +190,10 @@ export default defineComponent({
       changePage,
       formInline,
       handleSearch,
+      dialogVisible,
+      handleClose,
+      formUser,
+      onSubmit
     }
   }
 })
