@@ -5,7 +5,9 @@
       <el-container>
         <common-header/>
         <common-tab/>
-        <el-main><router-view/></el-main>
+        <el-main class="right-main">
+          <router-view/>
+        </el-main>
       </el-container>
     </el-container>
   </div>
@@ -20,10 +22,10 @@ import CommonTab from "@/components/CommonTab.vue";
 
 export default defineComponent({
   // eslint-disable-next-line vue/multi-word-component-names
-  name: 'Main',
-  props:{
-    msg: String,
-  },
+  // name: 'Main',
+  // props:{
+  //   msg: String,
+  // },
   components:{
     CommonHeader,
     CommonAside,
@@ -38,14 +40,20 @@ export default defineComponent({
 .el-container {
   flex-wrap: wrap;
   align-items: flex-start;
+  height: 100%;
 }
 
-.el-aside {
-   height: 100%;
-}
 
 .common-layout {
   height: 100%;
+  .lay-container{
+    flex-wrap: nowrap;
+    .right-main {
+      //height: 100%;
+      height: calc(100% - 124px) !important;
+    }
+  }
+
   & > .el-container {
     height: 100%;
      & > .el-aside {
@@ -53,10 +61,10 @@ export default defineComponent({
        background-color: #545c64;
      }
   }
-  .lay-container{
-    flex-wrap: nowrap;
-  }
 }
 
+.el-aside {
+   height: 100%;
+}
 
 </style>

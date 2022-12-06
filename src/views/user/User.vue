@@ -21,15 +21,15 @@
       </template>
     </el-table-column>
   </el-table>
-  </div>
   <el-pagination
       small
       background
       layout="prev, pager, next"
       :total="config.total"
-      class="mt-4"
+      class="pager mt-4"
       @current-change="changePage($event)"
   />
+  </div>
 </template>
 
 
@@ -98,4 +98,15 @@ export default defineComponent({
   }
 })
 </script>
+<style lang="less" scoped>
+.table{
+  position: relative;
+  height: 520px;
+  .pager {
+    position: absolute;
+    right: 0;
+    bottom: -20px;
+  }
+}
+</style>
 
