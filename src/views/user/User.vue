@@ -1,6 +1,15 @@
-
-
 <template>
+  <div class="user-header">
+    <el-button type="primary"> + 新增 </el-button>
+    <el-form :inline="true" :model="formInline" >
+      <el-form-item label="请输入">
+        <el-input v-model="formInline.keyword" placeholder="用户名" />
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="handleSearch">搜索</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
   <div class="table">
     <el-table :data="list" style="width: 100%; height: 500px" >
     <el-table-column
@@ -70,6 +79,7 @@ export default defineComponent({
     const config = reactive({
       total: 0,
       page: 1,
+      name: "",
     })
     onMounted(() => {
       getuserData(config)
@@ -84,16 +94,29 @@ export default defineComponent({
         return item;
       })
     }
+
     const changePage = (page) => {
       console.log(page);
       config.page = page;
       getuserData(config);
     }
+
+    const formInline = reactive({
+      keyword: "",
+    })
+
+    const handleSearch = () => {
+      config.name = formInline.keyword;
+      getuserData(config)
+    }
+
     return {
       list,
       tableLabel,
       config,
-      changePage
+      changePage,
+      formInline,
+      handleSearch,
     }
   }
 })
@@ -108,5 +131,11 @@ export default defineComponent({
     bottom: -20px;
   }
 }
+
+.user-header {
+  display: flex;
+  justify-content: space-between;
+}
+
 </style>
 
