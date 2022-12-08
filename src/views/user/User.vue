@@ -45,13 +45,13 @@
     width="45%"
     :before-close="handleClose"
   >
-    <el-form :inline="true" :model="formUser" >
+    <el-form :inline="true" :model="formUser" ref="userForm">
       <el-row>
         <el-col :span="12">
-          <el-form-item label="姓名">
+          <el-form-item label="姓名" prop="name">
             <el-input v-model="formUser.name" placeholder="请输入姓名"/>
           </el-form-item>
-          <el-form-item label="性别">
+          <el-form-item label="性别" prop="sex">
             <el-select v-model="formUser.sex" placeholder="请选择">
               <el-option label="男" value="0"/>
               <el-option label="女" value="1"/>
@@ -60,11 +60,11 @@
         </el-col>
 
         <el-col :span="12">
-          <el-form-item label="年龄">
+          <el-form-item label="年龄" prop="age">
             <el-input v-model="formUser.age" placeholder="请输入年龄"/>
           </el-form-item>
 
-          <el-form-item  label="出生日期" prop="date">
+          <el-form-item  label="出生日期" prop="birth">
             <el-date-picker
                   v-model="formUser.birth"
                   type="birth"
@@ -76,14 +76,14 @@
         </el-col>
       </el-row>
 
-      <el-form-item label="地址">
+      <el-form-item label="地址" prop="addr">
         <el-input v-model="formUser.addr" placeholder="请输入地址"  type="textarea" />
       </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="onSumbit">
+        <el-button type="primary" @click="onSubmit">
           确定
         </el-button>
       </span>
@@ -179,8 +179,26 @@ export default defineComponent({
       birth: "",
       addr: "",
     })
-    const onSubmit = () => {
-      this.dialogVisible = false;
+    const timeFormat = (time) =>{
+      let date = new Date(time);
+      let year = date.getFullYear();
+      let month = date.getMonth() + 1;
+      let day = date.getDate();
+      function add(m) {
+        return m < 10 ? '0' + m : m
+      }
+      return year + '-' + add(month) + '-' + add(day);
+    }
+    const onSubmit = async () => {
+      formUser.birth = timeFormat(formUser.birth);
+      // let res = await proxy.$api.getUserData(config);
+      let res = await proxy.$api.addUser(formUser);
+      console.log(res);
+      if (res){
+        proxy.$refs.userForm.resetFields();
+        dialogVisible.value = false;
+        await getuserData(config);
+      }
 
     }
     return {

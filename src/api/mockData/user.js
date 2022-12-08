@@ -1,4 +1,5 @@
 import Mock from 'mockjs'
+import request from "@/api/request";
 
 // get请求从config.url获取参数，post从config.body中获取参数
 function param2Obj(url) {
@@ -71,7 +72,7 @@ export default {
       sex: sex
     })
     return {
-      code: 20000,
+      code: 200,
       data: {
         message: '添加成功'
       }

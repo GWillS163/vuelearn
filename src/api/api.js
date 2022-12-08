@@ -34,6 +34,16 @@ export default {
             data: params,
             mock: false  // 如果是fastMock环境，需要改为true
         })
+    },
+    addUser(params){
+    return request({
+      url: '/user/add',
+      method: 'post',
+      // 这个mock
+      mock: false,
+      data:params
+
+    })
     }
 
 
