@@ -48,10 +48,13 @@
     <el-form :inline="true" :model="formUser" ref="userForm">
       <el-row>
         <el-col :span="12">
-          <el-form-item label="姓名" prop="name">
+          <el-form-item label="姓名" prop="name"
+           :rules="[{'required': true, 'message': '请输入姓名', 'trigger': 'blur'}]">
             <el-input v-model="formUser.name" placeholder="请输入姓名"/>
           </el-form-item>
-          <el-form-item label="性别" prop="sex">
+          <el-form-item label="性别" prop="sex"
+          :rules="[{'required': true, 'message': '请选择', 'trigger': 'blur'}]"
+          >
             <el-select v-model="formUser.sex" placeholder="请选择">
               <el-option label="男" value="0"/>
               <el-option label="女" value="1"/>
@@ -60,11 +63,17 @@
         </el-col>
 
         <el-col :span="12">
-          <el-form-item label="年龄" prop="age">
-            <el-input v-model="formUser.age" placeholder="请输入年龄"/>
+          <el-form-item label="年龄" prop="age"
+          :rules="[{'required': true, 'message': '请输入数字', 'trigger': 'blur'},
+          {'type': 'number', 'message': '年龄必须是数字'}]"
+          >
+            <el-input v-model.number="formUser.age" placeholder="请输入年龄"/>
           </el-form-item>
 
-          <el-form-item  label="出生日期" prop="birth">
+          <el-form-item  label="出生日期" prop="birth"
+          :rules="[{'required': true, 'message': '请选择' },
+          ]"
+          >
             <el-date-picker
                   v-model="formUser.birth"
                   type="birth"
@@ -82,7 +91,7 @@
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button @click="handleCancel">取消</el-button>
         <el-button type="primary" @click="onSubmit">
           确定
         </el-button>
@@ -189,7 +198,24 @@ export default defineComponent({
       }
       return year + '-' + add(month) + '-' + add(day);
     }
+    const handleCancel = () => {
+      dialogVisible.value = false;
+      proxy.$refs.userForm.resetFields();
+    }
     const onSubmit = async () => {
+      // 提交前校验1
+      try {
+        await proxy.$refs.userForm.validate();
+      } catch (error) {
+        return false;
+      }
+      // 提交前校验2 - 视频中方法
+     // proxy.$refs.userForm.validate( async (validate) => {
+     //    if (validate) {
+     //
+     //    }
+     //  });
+
       formUser.birth = timeFormat(formUser.birth);
       // let res = await proxy.$api.getUserData(config);
       let res = await proxy.$api.addUser(formUser);
@@ -199,6 +225,7 @@ export default defineComponent({
         dialogVisible.value = false;
         await getuserData(config);
       }
+
 
     }
     return {
@@ -211,7 +238,8 @@ export default defineComponent({
       dialogVisible,
       handleClose,
       formUser,
-      onSubmit
+      onSubmit,
+      handleCancel
     }
   }
 })
