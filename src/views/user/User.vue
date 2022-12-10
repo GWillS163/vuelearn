@@ -1,6 +1,6 @@
 <template>
   <div class="user-header">
-    <el-button type="primary" @click="dialogVisible=true"> + 新增 </el-button>
+    <el-button type="primary" @click="handleAdd"> + 新增 </el-button>
     <el-form :inline="true" :model="formInline" >
       <el-form-item label="请输入">
         <el-input v-model="formInline.keyword" placeholder="用户名" />
@@ -23,9 +23,9 @@
 
     <el-table-column fixed="right" label="操作" min-width="180" >
 
-      <template #default>
+      <template #default="scope">
         <el-button link type="primary" size="small"
-          >编辑</el-button >
+                   @click="handleEdit(scope.row)">编辑</el-button>
         <el-button link type="danger" size="small">删除</el-button>
       </template>
     </el-table-column>
@@ -41,7 +41,7 @@
   </div>
   <el-dialog
     v-model="dialogVisible"
-    title="信息新增"
+    :title="action === 'add' ? '用户新增' : '用户编辑'"
     width="45%"
     :before-close="handleClose"
   >
@@ -76,7 +76,6 @@
           >
             <el-date-picker
                   v-model="formUser.birth"
-                  type="birth"
                   label="出生日期"
                   placeholder="选择日期"
                   style="width: 100%"
@@ -103,7 +102,7 @@
 
 <script>
 import {defineComponent, getCurrentInstance, onMounted, reactive, ref} from "vue";
-import {ElMessageBox} from "element-plus";
+import {ElMessage, ElMessageBox} from "element-plus";
 
 
 export default defineComponent({
@@ -203,10 +202,15 @@ export default defineComponent({
       proxy.$refs.userForm.resetFields();
     }
     const onSubmit = async () => {
-      // 提交前校验1
+      // 提交前校验1gfd
       try {
         await proxy.$refs.userForm.validate();
       } catch (error) {
+        ElMessage({
+          showClose: true,
+          message: "请填写完整正确的信息",
+          type: 'error',
+        });
         return false;
       }
       // 提交前校验2 - 视频中方法
@@ -228,6 +232,23 @@ export default defineComponent({
 
 
     }
+
+    // 区分是新增还是编辑
+    const action = ref("add");
+    const handleAdd = () => {
+      action.value = "add";
+      dialogVisible.value = true;
+    }
+    const handleEdit = (row) => {
+      // console.log(row)
+      action.value = "edit";
+      dialogVisible.value = true;
+      row.sex === 1 ? (row.sex = '男') : (row.sex = "女");
+      proxy.$nextTick(() => {
+
+        Object.assign(formUser, row);
+      })
+    }
     return {
       list,
       tableLabel,
@@ -239,7 +260,10 @@ export default defineComponent({
       handleClose,
       formUser,
       onSubmit,
-      handleCancel
+      handleCancel,
+      action,
+      handleEdit,
+      handleAdd,
     }
   }
 })
