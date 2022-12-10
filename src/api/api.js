@@ -44,6 +44,16 @@ export default {
       data:params
 
     })
+    },
+    editUser(params){
+    return request({
+      url: '/user/edit',
+      method: 'post',
+      // 这个mock
+      mock: false,
+      data: params
+
+    })
     }
 
 

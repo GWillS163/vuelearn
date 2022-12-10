@@ -93,7 +93,7 @@ export default {
     } else {
       List = List.filter(u => u.id !== id)
       return {
-        code: 20000,
+        code: 200,
         message: '删除成功'
       }
     }
@@ -108,7 +108,7 @@ export default {
     ids = ids.split(',')
     List = List.filter(u => !ids.includes(u.id))
     return {
-      code: 20000,
+      code: 200,
       data: {
         message: '批量删除成功'
       }
@@ -119,7 +119,7 @@ export default {
    * @param id, name, addr, age, birth, sex
    * @return {{code: number, data: {message: string}}}
    */
-  updateUser: config => {
+  editUser: config => {
     const { id, name, addr, age, birth, sex } = JSON.parse(config.body)
     const sex_num = parseInt(sex)
     List.some(u => {
@@ -133,7 +133,7 @@ export default {
       }
     })
     return {
-      code: 20000,
+      code: 200,
       data: {
         message: '编辑成功'
       }

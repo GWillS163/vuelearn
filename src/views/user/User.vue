@@ -219,18 +219,29 @@ export default defineComponent({
      //
      //    }
      //  });
-
-      formUser.birth = timeFormat(formUser.birth);
-      // let res = await proxy.$api.getUserData(config);
-      let res = await proxy.$api.addUser(formUser);
-      console.log(res);
-      if (res){
-        proxy.$refs.userForm.resetFields();
-        dialogVisible.value = false;
-        await getuserData(config);
+      if (action.value === "add"){
+        formUser.birth = timeFormat(formUser.birth);
+        // let res = await proxy.$api.getUserData(config);
+        let res = await proxy.$api.addUser(formUser);
+        console.log(res);
+        if (res){
+          proxy.$refs.userForm.resetFields();
+          dialogVisible.value = false;
+          await getuserData(config);
+        }
+      }else{
+        formUser.sex === "男" ? (formUser.sex = 1) : (formUser.sex = 0);
+        formUser.birth = timeFormat(formUser.birth);
+        // let res = await proxy.$api.getUserData(config);
+        console.log("formUser",formUser);
+        let res = await proxy.$api.editUser(formUser);
+        console.log(res);
+        if (res){
+          proxy.$refs.userForm.resetFields();
+          dialogVisible.value = false;
+          await getuserData(config);
+        }
       }
-
-
     }
 
     // 区分是新增还是编辑
