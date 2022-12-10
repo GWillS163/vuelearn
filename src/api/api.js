@@ -54,6 +54,16 @@ export default {
       data: params
 
     })
+    },
+    deleteUser(params){
+    return request({
+      url: '/user/delete',
+      method: 'get',
+      // 这个mock
+      mock: false,
+      data: params
+
+    })
     }
 
 

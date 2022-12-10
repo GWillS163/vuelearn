@@ -83,6 +83,7 @@ export default {
    * @param id
    * @return {*}
    */
+  // 先调用api.js中的deleteUser方法，然后mock拦截，调用mock.js中的deleteUser方法
   deleteUser: config => {
     const { id } = param2Obj(config.url)
     if (!id) {

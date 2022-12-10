@@ -26,7 +26,8 @@
       <template #default="scope">
         <el-button link type="primary" size="small"
                    @click="handleEdit(scope.row)">编辑</el-button>
-        <el-button link type="danger" size="small">删除</el-button>
+        <el-button link type="danger" size="small"
+         @click="handleDelete(scope.row)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -260,6 +261,19 @@ export default defineComponent({
         Object.assign(formUser, row);
       })
     }
+    const handleDelete = (row) => {
+      ElMessageBox.confirm("确定删除吗?")
+      .then( async () => {
+        let res = await proxy.$api.deleteUser({id: row.id});
+
+        ElMessage({
+          showClose: true,
+          message: "删除成功",
+          type: 'success',
+        });
+        await getuserData(config);
+      })
+    }
     return {
       list,
       tableLabel,
@@ -275,6 +289,7 @@ export default defineComponent({
       action,
       handleEdit,
       handleAdd,
+      handleDelete
     }
   }
 })
