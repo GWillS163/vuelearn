@@ -8,3 +8,4 @@ Mock.mock('/home/getChartData', homeApi.getChartData())
 // 本地获取用户列表
 Mock.mock(/user\/getUser/, "get", userApi.getUserList)
 Mock.mock(/user\/add/, "post", userApi.createUser)
+Mock.mock(/user\/edit/, "post", userApi.editUser)
