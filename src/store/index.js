@@ -1,5 +1,5 @@
+import {createStore} from 'vuex'
 
-import { createStore } from 'vuex'
 export default createStore({
     state: {
         isCollapse: true,
@@ -36,6 +36,14 @@ export default createStore({
         setMenu(state, payload) {
             state.menu = payload
             localStorage.setItem('menu', JSON.stringify(payload))
+        },
+        // 每次刷新页面，从本地获取menu
+        addMenu(state) {
+            if (!localStorage.getItem("menu")) {
+                return
+            }
+            state.menu = JSON.parse(localStorage.getItem("menu"))
+
         }
     }
 })
