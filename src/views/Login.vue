@@ -39,6 +39,7 @@ export default {
       const res = await proxy.$api.getMenu(loginForm.value);
       console.log(res)
       store.commit("setMenu", res.menu)
+      store.commit("addMenu", router)
       await router.push({
         name: "home"
       })

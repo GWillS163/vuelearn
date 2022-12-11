@@ -38,12 +38,34 @@ export default createStore({
             localStorage.setItem('menu', JSON.stringify(payload))
         },
         // 每次刷新页面，从本地获取menu
-        addMenu(state) {
+        addMenu(state, router) {
             if (!localStorage.getItem("menu")) {
                 return
             }
-            state.menu = JSON.parse(localStorage.getItem("menu"))
+            const menu = JSON.parse(localStorage.getItem("menu"))
+            state.menu = menu
 
+            const menuArray = []
+
+            menu.forEach(item => {
+                let url = `../views/${item.url}.vue`
+                if (item.children) {
+                    item.children = item.children.map(item => {
+                        item.component = () => require(url)
+                        return item
+                    })
+                    menuArray.push(...item.children)
+                }else {
+                    item.component = () => require(url)
+                    menuArray.push(item)
+                }
+            })
+            console.log("menuArray", menuArray);
+            console.log("router", router);
+            console.log("router.options",router.options);
+            menuArray.forEach(item => {
+                router.addRoute('home1', item)
+            })
         }
     }
 })

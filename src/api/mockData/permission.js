@@ -17,7 +17,7 @@ export default {
               name: 'home',
               label: '首页',
               icon: 's-home',
-              url: 'home/index'
+              url: 'home/Home'
             },
             {
               path: '/mall',
@@ -31,7 +31,7 @@ export default {
               name: 'user',
               label: '用户管理',
               icon: 'user',
-              url: 'User/index'
+              url: 'User/User'
             },
             {
               label: '其他',
@@ -42,14 +42,14 @@ export default {
                   name: 'page1',
                   label: '页面1',
                   icon: 'setting',
-                  url: 'other/pageOne.vue'
+                  url: 'Page1'
                 },
                 {
                   path: '/page2',
                   name: 'page2',
                   label: '页面2',
                   icon: 'setting',
-                  url: 'other/pageTwo.vue'
+                  url: 'Page2'
                 }
               ]
             }
@@ -68,7 +68,7 @@ export default {
               name: 'home',
               label: '首页',
               icon: 's-home',
-              url: 'home/index'
+              url: 'home/Home'
             },
             {
               path: '/video',

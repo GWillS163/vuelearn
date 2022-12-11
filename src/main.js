@@ -2,8 +2,9 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import './assets/less/index.less'
-import './api/mock.js'
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import store from './store/index.js'
+import './api/mock.js'
 const app = createApp(App)
 
 import BootstrapVue3 from 'bootstrap-vue-3'
@@ -17,13 +18,14 @@ import 'element-plus/dist/index.css'
 app.use(ElementPlus)
 
 
-import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
 
 import api from './api/api.js'
 app.config.globalProperties.$api = api
+    // 数据持久化，调用store中的addMenu方法，将路由信息传入，数据存储在store中
+store.commit("addMenu", router);
 app.use(router).use(store)
 app.mount('#app')
 //test
