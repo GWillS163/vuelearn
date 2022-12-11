@@ -11,7 +11,8 @@ export default createStore({
                 name: 'home',
                 icon: 's-home'
             }
-        ]
+        ],
+        menu: [],
     },
     mutations: {
         updateIsCollapse(state, payload) {
@@ -31,6 +32,10 @@ export default createStore({
         closeTag(state, payload) {
             let result = state.tagsList.findIndex(item => item.name === payload.name)
             state.tagsList.splice(result, 1)
+        },
+        setMenu(state, payload) {
+            state.menu = payload
+            localStorage.setItem('menu', JSON.stringify(payload))
         }
     }
 })

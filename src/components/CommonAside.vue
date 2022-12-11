@@ -86,13 +86,14 @@ export default {
       const router = useRouter();
 
       const noChildren = () => {
-        return list.filter((item) => !item.children);
+        return asyncList.filter((item) => !item.children);
       };
 
       const hasChildren = () => {
-        return list.filter((item) => item.children);
+        return asyncList.filter((item) => item.children);
       };
 
+      const asyncList = store.state.menu;
       // Menu jump
       const clickMenu = (item) => {
         router.push({

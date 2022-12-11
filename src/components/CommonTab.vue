@@ -3,12 +3,12 @@
     <el-tag
     :key="tag.name"
     v-for="(tag, index) in tags"
-    :iscollspse="tag.name !== 'home'"
+    :closable="tag.name !== 'home'"
     :disable-transitions="false"
     :effect="$route.name === tag.name ? 'dark' : 'plain'"
     @click="changeMenu(tag)"
 
-    closable
+
     @close="handleClose(tag, index)"
     >
       {{tag.label}}
