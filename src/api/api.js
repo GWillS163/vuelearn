@@ -64,6 +64,15 @@ export default {
       data: params
 
     })
+    },
+    // 获得菜单列表
+    getMenu(params) {
+        return request({
+            url: '/permission/getMenu', // 本地mock数据
+            method: 'post',
+            mock: false,
+            data: params
+        })
     }
 
 
