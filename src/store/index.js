@@ -1,4 +1,5 @@
 import {createStore} from 'vuex'
+import router from "@/router";
 
 export default createStore({
     state: {
@@ -38,11 +39,32 @@ export default createStore({
             localStorage.setItem('menu', JSON.stringify(payload))
         },
         // 每次刷新页面，从本地获取menu
-        addMenu(state) {
+        addMenu(state, router) {
             if (!localStorage.getItem("menu")) {
                 return
             }
-            state.menu = JSON.parse(localStorage.getItem("menu"))
+            const menu = JSON.parse(localStorage.getItem("menu"))
+            state.menu = menu
+
+            const menuArr = []
+            menu.forEach(item => {
+                if (item.children) {
+                    // 有子菜单 递归 生成子菜单
+                    item.children = item.children.map(item => {
+                        let url = `../views/${item.url}.vue`
+                        item.component = () => import(url)
+                        return item
+                    })
+                    menuArr.push(...item.children)
+                }else {
+                    let url = `../views/${item.url}.vue`
+                    item.component = () => import(url)
+                    menuArr.push(item)
+                }
+            })
+            menuArr.forEach(item => {
+               router.addRoute("home1", item)
+            })
 
         }
     }

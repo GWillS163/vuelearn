@@ -5,8 +5,10 @@
 <script setup>
 // 数据持久化，有了以下三行代码，刷新页面不会丢失
 import { useStore } from "vuex"
+import { useRouter } from "vue-router"
 const store = useStore();
-store.commit("addMenu")
+const router = useRouter();
+store.commit("addMenu", router)
 </script>
 <style>
 #app {
