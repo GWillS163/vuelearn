@@ -2,23 +2,11 @@
   <router-view/>
 </template>
 
-<script>
-// import ElementTest from "./components/Eleme.vue";
-// import BSTest from "@/components/BSTest";
-
-
-export default {
-  components: {
-    // ElementTest,
-    // BSTest,
-  },
-  setup() {
-    return {
-      zIndex: 3000,
-      size: 'small',
-    }
-  },
-}
+<script setup>
+// 数据持久化，有了以下三行代码，刷新页面不会丢失
+import { useStore } from "vuex"
+const store = useStore();
+store.commit("addMenu")
 </script>
 <style>
 #app {
