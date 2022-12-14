@@ -31,7 +31,7 @@ export default {
               name: 'user',
               label: '用户管理',
               icon: 'user',
-              url: 'User/User'
+              url: 'user/User'
             },
             {
               label: '其他',
@@ -64,11 +64,11 @@ export default {
         data: {
           menu: [
             {
-              path: '/',
+              path: '/home',
               name: 'home',
               label: '首页',
               icon: 's-home',
-              url: 'home/index'
+              url: 'home/Home'
             },
             {
               path: '/video',

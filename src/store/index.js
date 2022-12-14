@@ -69,6 +69,12 @@ export default createStore({
             menuArray.forEach(item => {
                 router.addRoute('home1', item)
             })
+        },
+        cleanMenu() {
+
+            localStorage.removeItem("menu");
+
         }
+
     }
 })

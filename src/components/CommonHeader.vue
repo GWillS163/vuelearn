@@ -20,7 +20,7 @@
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item>个人中心</el-dropdown-item>
-            <el-dropdown-item>退出登录</el-dropdown-item>
+            <el-dropdown-item @click="handleLogout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -35,11 +35,12 @@
 
 <script>
 import {  computed, defineComponent } from "vue-demi";
-// import { useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 export default defineComponent({
   setup(){
     const store = useStore();
+    const router = useRouter();
     // const imgSrc = require('../assets/images/user.png')
     let getImageUrl = () => {
       // console.log(import.meta.url);
@@ -56,10 +57,18 @@ export default defineComponent({
       return store.state.currentMenu;
     });
 
+    let handleLogout = () => {
+      store.commit("cleanMenu");
+      router.push({
+        path: "/login"
+      })
+    }
+
     return {
       getImageUrl,
       handleCollapse,
-      current
+      current,
+      handleLogout
     }
   },
   name: 'CommonHeader'
