@@ -24,6 +24,8 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 
 import api from './api/api.js'
 app.config.globalProperties.$api = api
+
+store.commit("addMenu", router)
 app.use(router).use(store)
 app.mount('#app')
 //test
