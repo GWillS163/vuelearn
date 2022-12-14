@@ -26,6 +26,29 @@ import api from './api/api.js'
 app.config.globalProperties.$api = api
 
 store.commit("addMenu", router)
+// 路由守卫
+function checkRouter(path) {
+  let hasCheck = router.getRoutes().filter(item => item.path === path).length > 0
+  return hasCheck
+}
+checkRouter()
+router.beforeEach((to,
+                   from,
+                   next) => {
+  const token = store.state.token
+  // console.log(token);
+  if (!token && to.path !== '/login') { // 没有token，跳转到登录页
+    console.log("no token", to);
+    next({name: 'login'})
+  } else if (!checkRouter(to.path)) {
+    console.log("no router", to);  // 已登录后的异常路由
+    next({name: 'home'})
+  } else {
+    next()
+  }
+})
+
+
 app.use(router).use(store)
 app.mount('#app')
 //test

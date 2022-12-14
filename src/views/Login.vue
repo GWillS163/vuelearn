@@ -40,6 +40,7 @@ export default {
       console.log(res)
       store.commit("setMenu", res.menu)
       store.commit("addMenu", router)
+      store.commit("setToken", res.token)
       await router.push({
         name: "home1"
       })

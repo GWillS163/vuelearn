@@ -58,7 +58,9 @@ export default defineComponent({
     });
 
     let handleLogout = () => {
+      store.state.menu = [];
       store.commit("cleanMenu");
+      store.commit("removeToken");
       router.push({
         path: "/login"
       })

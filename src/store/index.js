@@ -1,4 +1,5 @@
 import {createStore} from 'vuex'
+import Cookie from 'js-cookie'
 
 export default createStore({
     state: {
@@ -13,6 +14,7 @@ export default createStore({
             }
         ],
         menu: [],
+        token: '',
     },
     mutations: {
         updateIsCollapse(state, payload) {
@@ -49,7 +51,6 @@ export default createStore({
 
             menu.forEach(item => {
 
-                let url = `../views/${item.url}.vue`
                 if (item.children) {
                     item.children = item.children.map(item => {
                         item.component = () => import(`../views/${item.url}.vue`)
@@ -74,6 +75,20 @@ export default createStore({
 
             localStorage.removeItem("menu");
 
+        },
+        setToken(state, payload) {
+            state.token = payload
+            // localStorage.setItem('token', payload)
+            Cookie.set('token', payload)
+        },
+        removeToken(state) {
+            state.token = ''
+            // localStorage.removeItem('token')
+            Cookie.remove('token')
+        },
+        getToken(state) {
+            // state.token = localStorage.getItem('token')
+            state.token = state.token ||  Cookie.get('token')
         }
 
     }
